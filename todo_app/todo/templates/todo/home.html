@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}My Tasks{% endblock %}
+{% block content %}
+<div class="card">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <h2 style="margin: 0;">My Tasks</h2>
+        <a href="{% url 'todo_create' %}" class="btn btn-primary">+ New Task</a>
+    </div>
+
+    <div class="todo-list">
+        {% for todo in todos %}
+        <div class="todo-item">
+            <div class="todo-content">
+                <div class="todo-title {% if todo.resolved %}resolved{% endif %}">
+                    <a href="{% url 'todo_toggle' todo.pk %}" style="color: inherit; text-decoration: inherit;">
+                        {% if todo.resolved %}✅{% else %}⬜{% endif %} {{ todo.title }}
+                    </a>
+                </div>
+                <div class="todo-meta">
+                    {% if todo.due_date %}Due: {{ todo.due_date }}{% endif %}
+                    {% if todo.description %} • {{ todo.description|truncatechars:50 }}{% endif %}
+                </div>
+            </div>
+            <div class="todo-actions">
+                <a href="{% url 'todo_update' todo.pk %}" class="btn btn-secondary"
+                    style="padding: 0.25rem 0.5rem; font-size: 0.875rem;">Edit</a>
+                <a href="{% url 'todo_delete' todo.pk %}" class="btn btn-danger"
+                    style="padding: 0.25rem 0.5rem; font-size: 0.875rem;">Delete</a>
+            </div>
+        </div>
+        {% empty %}
+        <div style="text-align: center; padding: 2rem; color: var(--text-secondary);">
+            <p>No tasks yet. Add one to get started!</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

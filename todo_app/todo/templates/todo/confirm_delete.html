@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Delete Task{% endblock %}
+{% block content %}
+<div class="card" style="text-align: center; padding: 3rem;">
+    <h1 style="color: var(--danger);">Delete Task?</h1>
+    <p style="margin-bottom: 2rem; color: var(--text-secondary);">Are you sure you want to delete "<strong>{{ todo.title
+            }}</strong>"? This action cannot be undone.</p>
+    <form method="post">{% csrf_token %}
+        <div style="display: flex; justify-content: center; gap: 1rem;">
+            <button type="submit" class="btn btn-danger">Yes, Delete</button>
+            <a href="{% url 'todo_list' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
